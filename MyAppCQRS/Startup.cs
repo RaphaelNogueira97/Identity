@@ -141,8 +141,8 @@ namespace MyAppCQRS
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            new IdentityInitializer(context, userManager, roleManager)
-                .Initialize();
+            //new IdentityInitializer(context, userManager, roleManager)
+            //    .Initialize();
         }
     }
 }
