@@ -14,7 +14,8 @@ namespace MyAppCQRS.Domain.Core.Entities
 
     public static class Roles
     {
-        public const string ROLE_API_ALTURAS = "Acesso-APIAlturas";
+        public const string ROLE_MEMBER = "Member";
+        public const string ROLE_ADMIN = "Admin";
     }
 
     public class TokenConfigurations

@@ -27,32 +27,36 @@ namespace MyAppCQRS.Infra.Repositories
         {
             if (_context.Database.EnsureCreated())
             {
-                if (!_roleManager.RoleExistsAsync(Roles.ROLE_API_ALTURAS).Result)
+                if (!_roleManager.RoleExistsAsync(Roles.ROLE_ADMIN).Result)
                 {
                     var resultado = _roleManager.CreateAsync(
-                        new IdentityRole(Roles.ROLE_API_ALTURAS)).Result;
+                        new IdentityRole(Roles.ROLE_ADMIN)).Result;
                     if (!resultado.Succeeded)
                     {
                         throw new Exception(
-                            $"Erro durante a criação da role {Roles.ROLE_API_ALTURAS}.");
+                            $"Erro durante a criação da role {Roles.ROLE_ADMIN}.");
+                    }
+                }
+                if (!_roleManager.RoleExistsAsync(Roles.ROLE_MEMBER).Result)
+                {
+                    var resultado = _roleManager.CreateAsync(
+                        new IdentityRole(Roles.ROLE_MEMBER)).Result;
+                    if (!resultado.Succeeded)
+                    {
+                        throw new Exception(
+                            $"Erro durante a criação da role {Roles.ROLE_MEMBER}.");
                     }
                 }
 
                 CreateUser(
                     new ApplicationUser()
                     {
-                        UserName = "admin_apialturas",
-                        Email = "admin-apialturas@teste.com.br",
-                        EmailConfirmed = true
-                    }, "AdminAPIAlturas01!", Roles.ROLE_API_ALTURAS);
+                        UserName = "Raphael",
+                        Email = "r.nogueira@hotmail.com.br",
+                        EmailConfirmed = true,
+                        Role = Roles.ROLE_ADMIN
+                    }, "12345678", Roles.ROLE_ADMIN);
 
-                CreateUser(
-                    new ApplicationUser()
-                    {
-                        UserName = "usrinvalido_apialturas",
-                        Email = "usrinvalido-apialturas@teste.com.br",
-                        EmailConfirmed = true
-                    }, "UsrInvAPIAlturas01!");
             }
         }
 

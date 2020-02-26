@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using MyAppCQRS.Domain.Core.Helper;
 
 namespace MyAppCQRS
 {
@@ -64,7 +65,8 @@ namespace MyAppCQRS
             services
             .AddScoped(typeof(IResponseService), typeof(ResponseRepository))
             .AddScoped(typeof(IUserRepository), typeof(UserRepository))
-            .AddScoped(typeof(ITokenService), typeof(TokenService));
+            .AddScoped(typeof(ITokenService), typeof(TokenService))
+            .AddScoped(typeof(IHashService), typeof(HashService));
 
             var signingConfigurations = new SigningConfigurations();
             services.AddSingleton(signingConfigurations);

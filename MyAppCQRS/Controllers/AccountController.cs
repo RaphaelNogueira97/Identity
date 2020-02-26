@@ -16,7 +16,7 @@ namespace MyAppCQRS.Controllers
         {
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Response>> Post(RegisterAccountCommand command)
         {

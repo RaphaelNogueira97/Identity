@@ -55,10 +55,9 @@ namespace MyAppCQRS.Controllers
                         .Result;
                     if (resultadoLogin.Succeeded)
                     {
-                        // Verifica se o usuário em questão possui
-                        // a role Acesso-APIAlturas
+                        // Verifica se o usuário em questão possui acesso através das roles
                         credenciaisValidas = userManager.IsInRoleAsync(
-                            userIdentity, Roles.ROLE_API_ALTURAS).Result;
+                            userIdentity, userIdentity.Role).Result;
                     }
                 }
             }
