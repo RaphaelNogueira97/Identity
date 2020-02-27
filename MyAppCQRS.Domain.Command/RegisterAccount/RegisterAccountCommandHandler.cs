@@ -12,23 +12,17 @@ namespace MyAppCQRS.Domain.Command.RegisterAccount
     public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountCommand, Response>
     {
         private readonly IResponseService _responseService;
-        private readonly ApplicationDbContext _context;
         private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
-        private readonly Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IHashService _hashService;
 
         public RegisterAccountCommandHandler(IResponseService responseService,
-            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
             IMapper mapper,
             IHashService hashService)
         {
             _responseService = responseService;
-            _context = context;
             _userManager = userManager;
-            _roleManager = roleManager;
             _mapper = mapper;
             _hashService = hashService;
         }
