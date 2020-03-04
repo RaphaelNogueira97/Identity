@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace MyAppCQRS.Domain.Core.Responses
 {
-    public class Response
+    public class Response : JsonParse
     {
         public Response(object response, bool isValid = true)
         {
