@@ -8,7 +8,7 @@ namespace MyAppCQRS.Domain.Core.Entities
     public class User : BaseClass<User>
     {
         public string Name { get; set; }
-        public string Email { get; set; }
+        public new string Email { get; set; }
         public string Password { get; set; }
 
         public override string ToJson()
