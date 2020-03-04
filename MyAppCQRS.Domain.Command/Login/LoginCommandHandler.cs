@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using MyAppCQRS.Domain.Core.Entities;
+using MyAppCQRS.Domain.Core.Helper;
 using MyAppCQRS.Domain.Core.Interfaces;
 using MyAppCQRS.Domain.Core.Responses;
 using MyAppCQRS.Infra.Repositories;
@@ -15,29 +17,27 @@ namespace MyAppCQRS.Domain.Command.Login
     public class LoginCommandHandler : IRequestHandler<LoginCommand, Response>
     {
 
-        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IResponseService _response;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly SigningConfigurations _signingConfigurations;
-        private readonly TokenConfigurations _tokenConfigurations;
         private readonly ITokenService _tokenService;
+        private readonly IDistributedCache _distributedCache;
 
         public LoginCommandHandler(
-            IUserRepository userRepository,
             IMapper mapper,
             IResponseService response,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            IDistributedCache distributedCache)
         {
-            _userRepository = userRepository;
             _mapper = mapper;
             _response = response;
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _distributedCache = distributedCache;
         }
 
         public async Task<Response> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -67,9 +67,14 @@ namespace MyAppCQRS.Domain.Command.Login
             }
 
             if (credenciaisValidas)
-                return await _tokenService.CreateToken(user);
+            {
+                var response = await _tokenService.CreateToken(user);
 
-            return await _response.CreateResponse(null, false);
+                var authResponse = response.Convert<AuthResponse>();
+                await _distributedCache.SetStringAsync(authResponse.AccessToken, user.ToJson(), cancellationToken);
+            }
+
+            return _response.CreateResponse(null, false);
         }
     }
 }
