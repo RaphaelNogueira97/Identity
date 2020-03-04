@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using MyAppCQRS.Domain.Core.Helper;
+using Newtonsoft.Json;
 
 namespace MyAppCQRS.Domain.Core.Responses
 {
-    public class Response
+    public class Response : JsonParse
     {
         public Response(object response, bool isValid)
         {
