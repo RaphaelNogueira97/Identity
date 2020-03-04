@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using MyAppCQRS.Domain.Core.Entities;
+using MyAppCQRS.Domain.Core.Fixed;
 using MyAppCQRS.Domain.Core.Interfaces;
 using MyAppCQRS.Domain.Core.Responses;
 using MyAppCQRS.Models;
@@ -58,13 +59,13 @@ namespace MyAppCQRS.Infra.Repositories
             });
             var token = handler.WriteToken(securityToken);
 
-            return await _response.CreateResponse(new
+            return _response.CreateResponse(new
             {
                 authenticated = true,
                 created = dataCriacao.ToString("yyyy-MM-dd HH:mm:ss"),
                 expiration = dataExpiracao.ToString("yyyy-MM-dd HH:mm:ss"),
                 accessToken = token,
-                message = "OK"
+                message = ResponseType.Success
             }, true);
         }
     }
