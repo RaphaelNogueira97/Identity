@@ -47,7 +47,7 @@ namespace MyAppCQRS.Domain.Command.Login
         {
             var user = _mapper.Map<User>(request);
 
-            bool validCredentials; sdasdsa dsa;
+            bool validCredentials;
 
             if (user != null && !String.IsNullOrWhiteSpace(user.Email))
             {
