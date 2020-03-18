@@ -18,6 +18,3 @@ jobs:
         dotnet-version: 3.1.101
     - name: Build with dotnet
       run: dotnet build --configuration Release
-      if: failure()
-    - uses: github.head_ref
-    
