@@ -36,9 +36,9 @@ namespace MyAppCQRS.Domain.Command.RegisterAccount
             _userManager.AddToRoleAsync(user, user.Role).Wait();
 
             if (result.Succeeded)
-                return _responseService.CreateResponse(user, true);
+                return await _responseService.CreateResponse(user, true);
 
-            return _responseService.CreateResponse(result.Errors, false);
+            return await _responseService.CreateResponse(result.Errors, false);
         }
     }
 }
