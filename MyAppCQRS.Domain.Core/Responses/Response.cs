@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 ﻿using MyAppCQRS.Domain.Core.Helper;
 using Newtonsoft.Json;
-=======
-﻿using Newtonsoft.Json;
->>>>>>> Adjust login authentication and implements parcial cache
-=======
-﻿using MyAppCQRS.Domain.Core.Helper;
-using Newtonsoft.Json;
->>>>>>> adjust and implementation generic classes, but is broken application
 
 namespace MyAppCQRS.Domain.Core.Responses
 {
-    public class Response : JsonParse
+    public class Response
     {
         public Response(object response, bool isValid = true)
         {
