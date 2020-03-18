@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MyAppCQRS.Domain.Core.Entities;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MyAppCQRS.Infra.Repositories
@@ -15,6 +16,11 @@ namespace MyAppCQRS.Infra.Repositories
             NormalizedUserName = UserName.ToUpperInvariant();
             NormalizedEmail = Email.ToUpperInvariant();
             PhoneNumberConfirmed = PhoneNumber != null ? true : false;
+        }
+
+        public string ToJson()
+        {
+            return JsonSerializer.Serialize(this);
         }
     }
 }
