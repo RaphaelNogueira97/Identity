@@ -8,7 +8,11 @@ namespace MyAppCQRS.Domain.Core.Interfaces
 {
     public interface IResponseService
     {
+<<<<<<< HEAD
         Response CreateResponse(object response = null, bool isValid = true);
         Response CreateFailResponse();
+=======
+        Response CreateResponse(object response, bool isValid);
+>>>>>>> Adjust login authentication and implements parcial cache
     }
 }
