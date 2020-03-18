@@ -4,9 +4,9 @@ using System.Text.Json;
 
 namespace MyAppCQRS.Domain.Core.Helper
 {
-    public class JsonParse : Object
+    public static class JsonParse
     {
-        public T Convert<T>(this object obj)
+        public static T Convert<T>(object obj)
         {
             var jsonString = JsonSerializer.Serialize(obj);
             return JsonSerializer.Deserialize<T>(jsonString);

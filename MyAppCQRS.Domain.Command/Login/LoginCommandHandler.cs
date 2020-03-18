@@ -7,7 +7,6 @@ using MyAppCQRS.Domain.Core.Helper;
 using MyAppCQRS.Domain.Core.Interfaces;
 using MyAppCQRS.Domain.Core.Responses;
 using MyAppCQRS.Infra.Repositories;
-using MyAppCQRS.Models;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,32 +43,34 @@ namespace MyAppCQRS.Domain.Command.Login
         {
             var user = _mapper.Map<User>(request);
 
-            bool credenciaisValidas = false;
             if (user != null && !String.IsNullOrWhiteSpace(user.Email))
             {
+                bool credenciaisValidas = false;
+
                 var userIdentity = _userManager
                     .FindByEmailAsync(user.Email).Result;
-                if (userIdentity is null) return _response.CreateResponse(new { }, false);
+
+                if (userIdentity is null) return _response.CreateFailResponse();
 
                 var resultadoLogin = _signInManager
                         .CheckPasswordSignInAsync(userIdentity, user.Password, false)
                         .Result;
 
-                if (!resultadoLogin.Succeeded) return _response.CreateResponse(new { }, false);
+                if (!resultadoLogin.Succeeded) return _response.CreateFailResponse();
 
                 credenciaisValidas = _userManager.IsInRoleAsync(
                     userIdentity, userIdentity.Role).Result;
 
-                if (!credenciaisValidas) return _response.CreateResponse(new { }, false);
+                if (!credenciaisValidas) return _response.CreateFailResponse();
 
                 var response = await _tokenService.CreateToken(user);
-                var authResponse = response.Convert<AuthResponse>();
+                var authResponse = JsonParse.Convert<AuthResponse>(response);
                 await _distributedCache.SetStringAsync(authResponse.AccessToken, userIdentity.ToJson(), cancellationToken);
 
                 return _response.CreateResponse(authResponse);
             }
 
-            return _response.CreateResponse(new { }, false);
+            return _response.CreateFailResponse();
         }
     }
 }
