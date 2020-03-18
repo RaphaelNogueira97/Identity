@@ -56,6 +56,7 @@ namespace MyAppCQRS.Domain.Command.Login
                         .CheckPasswordSignInAsync(userIdentity, user.Password, false)
                         .Result;
 
+<<<<<<< HEAD
                 if (!resultadoLogin.Succeeded) return _response.CreateFailResponse();
 
                 credenciaisValidas = _userManager.IsInRoleAsync(
@@ -71,6 +72,17 @@ namespace MyAppCQRS.Domain.Command.Login
             }
 
             return _response.CreateFailResponse();
+=======
+            if (credenciaisValidas)
+            {
+                var response = await _tokenService.CreateToken(user);
+
+                var authResponse = response.Convert<AuthResponse>();
+                await _distributedCache.SetStringAsync(authResponse.AccessToken, user.ToJson(), cancellationToken);
+            }
+
+            return _response.CreateResponse(null, false);
+>>>>>>> Adjust login authentication and implements parcial cache
         }
     }
 }
