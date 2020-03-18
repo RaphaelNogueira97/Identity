@@ -2,6 +2,7 @@ using AutoMapper;
 using MyAppCQRS.Domain.Core.Interfaces;
 using MyAppCQRS.Infra.Repositories;
 using NSubstitute;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 using MyAppCQRS.Domain.Command.RegisterAccount;
 using MediatR;
@@ -45,8 +46,6 @@ namespace MyCQRSApp.Test.Command.Account
             user.PasswordHash = _hashService.CreatePasswordHash(request.Password);
             user.InitializeUser();
 
-            await Task.Delay(2);
-
             return _responseService.CreateResponse(user, true);
         }
 
@@ -60,11 +59,11 @@ namespace MyCQRSApp.Test.Command.Account
 
             _responseService.CreateResponse(new { }, true).Returns(_responseService.CreateResponse(account));
 
-            (await _mediator.Send(accountCommand, CancellationToken.None)).Returns(new Response(account, true));
+            _mediator.Configure().Send(Arg.Any<IRequest<Response>>()).Returns(Task.FromResult(_responseService.CreateResponse(new { }, true)));
 
-            var resp = await Handle(accountCommand, CancellationToken.None);
+            var r = await Handle(accountCommand, CancellationToken.None);
 
-            resp.IsValid.Should().BeTrue();
+            r.IsValid.Should().BeTrue();
         }
     }
 }
