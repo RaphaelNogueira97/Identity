@@ -110,6 +110,16 @@ namespace MyAppCQRS
                     .RequireAuthenticatedUser().Build());
             });
 
+            var settings = Configuration.GetSection(nameof(CacheSettings)).Get<CacheSettings>();
+
+            services
+                .AddSingleton(settings)
+                .AddDistributedRedisCache(options =>
+                {
+                    options.InstanceName = settings.InstanceName;
+                    options.Configuration = settings.ConnectionString;
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -141,8 +151,8 @@ namespace MyAppCQRS
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            //new IdentityInitializer(context, userManager, roleManager)
-            //    .Initialize();
+            new IdentityInitializer(context, userManager, roleManager)
+                .Initialize();
         }
     }
 }

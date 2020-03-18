@@ -8,6 +8,7 @@ namespace MyAppCQRS.Domain.Core.Interfaces
 {
     public interface IResponseService
     {
-        Task<Response> CreateResponse(object response, bool isValid);
+        Response CreateResponse(object response = null, bool isValid = true);
+        Response CreateFailResponse();
     }
 }

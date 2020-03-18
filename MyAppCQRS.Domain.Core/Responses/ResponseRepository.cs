@@ -1,14 +1,17 @@
 ﻿using MyAppCQRS.Domain.Core.Interfaces;
 using MyAppCQRS.Domain.Core.Responses;
-using System.Threading.Tasks;
 
 namespace MyAppCQRS.Infra.Responses
 {
     public class ResponseRepository : IResponseService
     {
-        public async Task<Response> CreateResponse(object response, bool isValid)
+        public Response CreateFailResponse()
         {
-            return await Task.FromResult(new Response(response, isValid));
+            return new Response(null, false);
+        }
+        public Response CreateResponse(object response, bool isValid)
+        {
+            return new Response(response, isValid);
         }
     }
 }
