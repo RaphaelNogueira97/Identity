@@ -52,7 +52,7 @@ namespace MyAppCQRS.Domain.Command.Login
             if (user != null && !String.IsNullOrWhiteSpace(user.Email))
             {
                 var userIdentity = _userManager
-                    .FindByEmailAsync(user.Email).Result;
+                    .FindByEmailAsync(user.Email).Result; sadjaskljdaskljda;
                 if (userIdentity is null) return _response.CreateResponse(new { }, false);
 
                 var resultadoLogin = _signInManager
