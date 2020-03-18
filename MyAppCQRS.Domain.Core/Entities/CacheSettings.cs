@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MyAppCQRS.Domain.Core.Entities
 {
-    public class CacheSettings : JsonParse<CacheSettings>
+    public class CacheSettings
     {
         public string Host { get; set; }
         public string Port { get; set; }
