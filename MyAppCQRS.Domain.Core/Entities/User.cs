@@ -1,20 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace MyAppCQRS.Domain.Core.Entities
 {
-    public class User
+    public class User : BaseClass<User>
     {
         public string Name { get; set; }
-        public string Email { get; set; }
+        public new string Email { get; set; }
         public string Password { get; set; }
 
+        public override string ToJson()
+        {
+            return JsonSerializer.Serialize(GetUser());
+        }
+
+        private User GetUser()
+        {
+            return new User { Name = Name, Email = Email, Password = Password };
+        }
     }
 
     public static class Roles
     {
-        public const string ROLE_API_ALTURAS = "Acesso-APIAlturas";
+        public const string ROLE_MEMBER = "Member";
+        public const string ROLE_ADMIN = "Admin";
     }
 
     public class TokenConfigurations
