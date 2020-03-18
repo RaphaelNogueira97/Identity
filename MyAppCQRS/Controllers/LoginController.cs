@@ -30,7 +30,6 @@ namespace MyAppCQRS.Controllers
         public async Task<ActionResult<Response>> Post([FromBody]LoginCommand command)
         {
             return await Execute(command);
-
         }
     }
 }

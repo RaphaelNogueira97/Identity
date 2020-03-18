@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MyAppCQRS.Domain.Core.Entities;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MyAppCQRS.Infra.Repositories
 {

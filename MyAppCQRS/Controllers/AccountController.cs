@@ -17,6 +17,7 @@ namespace MyAppCQRS.Controllers
         {
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Response>> Post(RegisterAccountCommand command,
             [FromServices] ApplicationDbContext context,

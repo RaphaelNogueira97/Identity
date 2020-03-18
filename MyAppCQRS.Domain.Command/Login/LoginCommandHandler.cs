@@ -17,12 +17,15 @@ namespace MyAppCQRS.Domain.Command.Login
     public class LoginCommandHandler : IRequestHandler<LoginCommand, Response>
     {
 
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IResponseService _response;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IDistributedCache _distributedCache;
+        private readonly SigningConfigurations _signingConfigurations;
+        private readonly TokenConfigurations _tokenConfigurations;
 
         public LoginCommandHandler(
             IMapper mapper,
