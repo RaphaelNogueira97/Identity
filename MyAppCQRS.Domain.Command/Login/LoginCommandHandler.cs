@@ -47,7 +47,7 @@ namespace MyAppCQRS.Domain.Command.Login
         {
             var user = _mapper.Map<User>(request);
 
-            bool credenciaisValidas = false;sdfsdf;
+            bool validCredentials;
 
             if (user != null && !String.IsNullOrWhiteSpace(user.Email))
             {
@@ -61,10 +61,10 @@ namespace MyAppCQRS.Domain.Command.Login
 
                 if (!resultadoLogin.Succeeded) return _response.CreateResponse(new { }, false);
 
-                credenciaisValidas = _userManager.IsInRoleAsync(
+                validCredentials = _userManager.IsInRoleAsync(
                     userIdentity, userIdentity.Role).Result;
 
-                if (!credenciaisValidas) return _response.CreateResponse(new { }, false);
+                if (!validCredentials) return _response.CreateResponse(new { }, false);
 
                 var response = await _tokenService.CreateToken(user);
                 var authResponse = response.Convert<AuthResponse>();
