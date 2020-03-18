@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace MyAppCQRS.Domain.Core.Helper
 { 
-    public static class JsonParse : Object
+    public static class JsonParse
     {
         public static T Convert<T>(this object obj)
         {
