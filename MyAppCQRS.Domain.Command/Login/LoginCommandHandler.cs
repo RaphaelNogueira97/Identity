@@ -45,16 +45,23 @@ namespace MyAppCQRS.Domain.Command.Login
 
             if (user != null && !String.IsNullOrWhiteSpace(user.Email))
             {
+<<<<<<< HEAD
                 bool credenciaisValidas = false;
 
                 var userIdentity = _userManager
                     .FindByEmailAsync(user.Email).Result;
 
                 if (userIdentity is null) return _response.CreateFailResponse();
+=======
+                var userIdentity = _userManager
+                    .FindByEmailAsync(user.Email).Result;
+                if (userIdentity is null) return _response.CreateResponse(new { }, false);
+>>>>>>> adjust and implementation generic classes, but is broken application
 
                 var resultadoLogin = _signInManager
                         .CheckPasswordSignInAsync(userIdentity, user.Password, false)
                         .Result;
+<<<<<<< HEAD
 
 <<<<<<< HEAD
                 if (!resultadoLogin.Succeeded) return _response.CreateFailResponse();
@@ -76,13 +83,29 @@ namespace MyAppCQRS.Domain.Command.Login
             if (credenciaisValidas)
             {
                 var response = await _tokenService.CreateToken(user);
+=======
 
+                if (!resultadoLogin.Succeeded) return _response.CreateResponse(new { }, false);
+>>>>>>> adjust and implementation generic classes, but is broken application
+
+                credenciaisValidas = _userManager.IsInRoleAsync(
+                    userIdentity, userIdentity.Role).Result;
+
+                if (!credenciaisValidas) return _response.CreateResponse(new { }, false);
+
+                var response = await _tokenService.CreateToken(user);
                 var authResponse = response.Convert<AuthResponse>();
-                await _distributedCache.SetStringAsync(authResponse.AccessToken, user.ToJson(), cancellationToken);
+                await _distributedCache.SetStringAsync(authResponse.AccessToken, userIdentity.ToJson(), cancellationToken);
+
+                return _response.CreateResponse(authResponse);
             }
 
+<<<<<<< HEAD
             return _response.CreateResponse(null, false);
 >>>>>>> Adjust login authentication and implements parcial cache
+=======
+            return _response.CreateResponse(new { }, false);
+>>>>>>> adjust and implementation generic classes, but is broken application
         }
     }
 }

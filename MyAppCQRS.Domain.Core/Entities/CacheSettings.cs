@@ -17,6 +17,9 @@ namespace MyAppCQRS.Domain.Core.Entities
         public string InstanceName { get; set; }
         public string AbsoluteExpirationInMinutes { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> adjust and implementation generic classes, but is broken application
         public string ConnectionString { get
             {
                 var connectionString = $"{Host}:{Port}";
@@ -29,8 +32,11 @@ namespace MyAppCQRS.Domain.Core.Entities
                 return connectionString;
             }
         }
+<<<<<<< HEAD
 =======
         public string ConnectionString { get; }
 >>>>>>> Adjust login authentication and implements parcial cache
+=======
+>>>>>>> adjust and implementation generic classes, but is broken application
     }
 }
