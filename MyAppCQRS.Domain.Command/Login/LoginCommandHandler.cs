@@ -48,6 +48,7 @@ namespace MyAppCQRS.Domain.Command.Login
             var user = _mapper.Map<User>(request);
 
             bool credenciaisValidas = false;
+
             if (user != null && !String.IsNullOrWhiteSpace(user.Email))
             {
                 var userIdentity = _userManager
