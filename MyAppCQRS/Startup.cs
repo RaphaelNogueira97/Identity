@@ -41,9 +41,10 @@ namespace MyAppCQRS
                 .AddDefaultTokenProviders();
 
             services.AddControllers();
-            var assembly = AppDomain.CurrentDomain.Load("MyAppCQRS.Domain.Command");
-            services.AddMediatR(assembly);
-            services.AddAutoMapper(assembly);
+            var assemblyCommand = AppDomain.CurrentDomain.Load("MyAppCQRS.Domain.Command");
+            var assemblyCommandTest = AppDomain.CurrentDomain.Load("MyAppCQRS.Test.Command");
+            services.AddMediatR(assemblyCommand, assemblyCommandTest);
+            services.AddAutoMapper(assemblyCommand, assemblyCommandTest);
 
             services.AddSwaggerGen(c =>
             {

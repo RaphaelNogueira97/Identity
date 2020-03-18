@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.11.0" />
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
+    <PackageReference Include="MediatR" Version="8.0.0" />
     <PackageReference Include="NSubstitute" Version="4.2.1" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
@@ -18,8 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyAppCQRS.Domain.Command\MyAppCQRS.Domain.Command.csproj" />
-    <ProjectReference Include="..\MyAppCQRS.Domain.Core\MyAppCQRS.Domain.Core.csproj" />
-    <ProjectReference Include="..\MyAppCQRS.Infra\MyAppCQRS.Infra.csproj" />
   </ItemGroup>
 
 </Project>
