@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using MyAppCQRS.Domain.Core.Interfaces;
 using MyAppCQRS.Domain.Core.Responses;
 using MyAppCQRS.Infra.Repositories;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace MyAppCQRS.Domain.Command.RegisterAccount
             var result = await _userManager.CreateAsync(user);
             _userManager.AddToRoleAsync(user, user.Role).Wait();
 
-            if (result.Succeeded)
+            if (!result.Errors.Any())
                 return _responseService.CreateResponse(user, true);
 
             return _responseService.CreateResponse(result.Errors, false);
